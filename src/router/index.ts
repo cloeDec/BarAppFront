@@ -2,7 +2,9 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import CustomerList from "../components/CustomerList.vue";
 import CocktailList from "../components/CocktailList.vue";
-import Login from "../components/Login.vue";
+import Connection from "@/Page/Connection.vue";
+import Login from "@/components/Login.vue";
+import OrderCocktail from "@/components/OrderCocktail.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -18,6 +20,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/cocktails",
     name: "CocktailList",
     component: CocktailList,
+  },
+  {
+    path: "/ordercocktail",
+    name: "OrderCocktail",
+    component: OrderCocktail,
   },
 ];
 
