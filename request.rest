@@ -1,0 +1,20 @@
+@TOKEN= eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxNDQ3MjMyLCJleHAiOjE3NTE1MzM2MzJ9.Vvx2yN1xpOT1sbhZl4YcLa0PQtAfsy1u_cut_qPwfr-dIj5Ml7Uv6J7Mz6S-RsW7dgRzs9VKnI4uU3BvDUblbQ
+
+
+### Connexion (login)
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "motdepasse"
+}
+
+###
+
+### Récupérer la liste des cocktails (remplacez <TOKEN> par le vrai token reçu)
+GET http://localhost:8080/cocktails
+Authorization: Bearer {{TOKEN}}
+Accept: application/json
+
+### 

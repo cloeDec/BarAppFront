@@ -25,7 +25,12 @@ export default {
   methods: {
     async fetchCocktail() {
       try {
-        const response = await axios.get("http://localhost:8080/cocktails");
+        const token = localStorage.getItem("token");
+        const response = await axios.get("http://localhost:8080/cocktails", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        });
         this.cocktail = response.data;
       } catch (error) {
         this.error = "Erreur lors du chargement des cocktail.";
@@ -40,6 +45,4 @@ export default {
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
