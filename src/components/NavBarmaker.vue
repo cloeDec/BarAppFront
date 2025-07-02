@@ -46,7 +46,9 @@ export default {
         localStorage.clear();
         this.$router.push("/");
       } else {
-        this.$router.push(item.route);
+        this.$router.push(item.route).then(() => {
+          window.location.reload();
+        });
       }
     },
     isActive(item) {

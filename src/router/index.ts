@@ -5,6 +5,7 @@ import CocktailList from "../components/CocktailList.vue";
 import Connection from "@/Page/Connection.vue";
 import Login from "@/components/Login.vue";
 import OrderCocktail from "@/components/OrderCocktail.vue";
+import Panier from "@/components/Panier.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -25,6 +26,11 @@ const routes: Array<RouteRecordRaw> = [
     path: "/ordercocktail",
     name: "OrderCocktail",
     component: OrderCocktail,
+  },
+  {
+    path: "/panier",
+    name: "Panier",
+    component: Panier,
   },
 ];
 

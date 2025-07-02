@@ -4,8 +4,9 @@
     <div class="card-list">
       <div
         class="cocktail-card"
-        v-for="cocktail in cocktail"
+        v-for="(cocktail, idx) in cocktail"
         :key="cocktail.cocktail_id"
+        :class="{ 'fly-to-cart': animatingIndexes.includes(idx) }"
       >
         <img
           :src="cocktail.image_url"
@@ -17,6 +18,9 @@
             {{ cocktail.cocktail_name }}
           </span>
           <p class="cocktail-desc">{{ cocktail.description }}</p>
+          <button class="add-to-cart" @click="addToCart(cocktail, idx)">
+            Ajouter au panier
+          </button>
         </div>
       </div>
     </div>
@@ -34,6 +38,7 @@ export default {
       error: null,
       selectedCocktail: null,
       hoveredCocktail: null,
+      animatingIndexes: [],
     };
   },
 
@@ -54,6 +59,15 @@ export default {
         this.error = "Erreur lors du chargement des cocktail.";
         console.error(error);
       }
+    },
+    addToCart(cocktail, idx) {
+      let panier = JSON.parse(localStorage.getItem("panier") || "[]");
+      panier.push(cocktail);
+      localStorage.setItem("panier", JSON.stringify(panier));
+      this.animatingIndexes.push(idx);
+      setTimeout(() => {
+        this.animatingIndexes = this.animatingIndexes.filter((i) => i !== idx);
+      }, 700);
     },
   },
 
@@ -103,13 +117,15 @@ export default {
   background: #231915;
 }
 .cocktail-content {
-  width: 100%;
-  padding: 12px 10px 14px 14px;
+  width: 90%;
+  padding: 18px 16px 18px 16px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: flex-start;
   position: relative;
+  flex: 1;
+  height: 100%;
 }
 .cocktail-name {
   color: #fff;
@@ -118,6 +134,9 @@ export default {
   display: flex;
   align-items: center;
   gap: 6px;
+  padding-bottom: 6px;
+  padding-top: 2px;
+  padding-left: 2px;
 }
 .dot {
   display: inline-block;
@@ -133,10 +152,11 @@ export default {
   margin: 8px 0 0 0;
   line-height: 1.3;
   word-break: break-word;
+  padding: 0 2px 0 2px;
 }
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.25s;
+  transition: opacity 0.4s;
 }
 .fade-enter-from,
 .fade-leave-to {
@@ -153,5 +173,43 @@ export default {
     min-width: 0;
     max-width: 100vw;
   }
+}
+.add-to-cart {
+  margin-top: auto;
+  padding: 8px 16px;
+  background: #eac3b2;
+  color: #231915;
+  border: none;
+  border-radius: 16px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: 100%;
+}
+.add-to-cart:hover {
+  background: #e0b49e;
+}
+@keyframes flyToCart {
+  0% {
+    transform: scale(1) translate(0, 0);
+    opacity: 1;
+    z-index: 1;
+  }
+  60% {
+    transform: scale(0.7) translate(120px, 200px);
+    opacity: 0.8;
+    z-index: 10;
+  }
+  100% {
+    transform: scale(0.3) translate(200px, 350px);
+    opacity: 0;
+    z-index: 10;
+  }
+}
+.fly-to-cart {
+  animation: flyToCart 0.7s cubic-bezier(0.4, 0.8, 0.6, 1) forwards;
+  pointer-events: none;
+  z-index: 10;
 }
 </style>
