@@ -1,17 +1,15 @@
 <template>
   <div id="app">
-    <NavCustomer v-if="isLoggedIn && !isLoginPage" />
-    <CocktailList v-if="userRole === 'CLIENT'" />
-    <OrderCocktail v-else-if="userRole === 'BARMAKER'" />
-    <router-view v-else />
+    <NavCustomer v-if="isLoggedIn && !isLoginPage && userRole === 'CLIENT'" />
+    <NavBarmaker v-if="isLoggedIn && !isLoginPage && userRole === 'BARMAKER'" />
+    <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import NavCustomer from "./components/NavCustomer.vue";
-import CocktailList from "./components/CocktailList.vue";
-import OrderCocktail from "./components/OrderCocktail.vue";
+import NavBarmaker from "./components/NavBarmaker.vue";
 import { useRoute } from "vue-router";
 
 function getRoleFromToken() {
@@ -27,7 +25,7 @@ function getRoleFromToken() {
 
 export default defineComponent({
   name: "App",
-  components: { NavCustomer, CocktailList, OrderCocktail },
+  components: { NavCustomer, NavBarmaker },
   setup() {
     const route = useRoute();
     return { route };

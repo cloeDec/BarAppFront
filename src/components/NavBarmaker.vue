@@ -25,20 +25,12 @@ export default {
         },
         {
           label: "Commande",
-          route: "/orderline",
-          icon: `<svg width="24" height="24" fill="none" stroke="#bfa89e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"/>
-            <polyline points="12 6 12 12 16 14"/>
-          </svg>`,
-        },
-        {
-          label: "Panier",
-          route: "/panier",
+          route: "/ordercocktail",
           icon: `<svg width="24" height="24" fill="none" stroke="#bfa89e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>`,
         },
         {
           label: "Carte",
-          route: "/cocktails",
+          route: "/carte",
           icon: `<svg width="24" height="24" fill="none" stroke="#bfa89e" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M3 3h18l-9 9-9-9z"/>
             <path d="M12 12v7"/>

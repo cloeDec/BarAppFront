@@ -71,9 +71,11 @@ export default {
 }
 .card-list {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
   gap: 18px;
   justify-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 .cocktail-card {
   background: #3a2b25;
@@ -142,12 +144,14 @@ export default {
 }
 @media (max-width: 600px) {
   .card-list {
-    grid-template-columns: 1fr;
-    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 0 2vw;
   }
   .cocktail-card {
-    width: 95vw;
+    width: 100%;
     min-width: 0;
+    max-width: 100vw;
   }
 }
 </style>

@@ -43,11 +43,13 @@ export default {
         // Redirige selon le rôle
         const role = getRoleFromToken();
         if (role === "CLIENT") {
-          this.$router.push("/cocktails");
+          this.$router.push("/cocktails").then(() => window.location.reload());
         } else if (role === "BARMAKER") {
-          this.$router.push("/ordercocktail");
+          this.$router
+            .push("/ordercocktail")
+            .then(() => window.location.reload());
         } else {
-          this.$router.push("/");
+          this.$router.push("/").then(() => window.location.reload());
         }
       } catch (err) {
         this.error = "Email ou mot de passe incorrect.";
