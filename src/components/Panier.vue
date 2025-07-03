@@ -5,7 +5,7 @@
     <ul v-else>
       <li
         v-for="(cocktail, idx) in panierStore.cocktails"
-        :key="idx"
+        :key="cocktail.cocktail_id"
         class="panier-item"
       >
         <img
@@ -32,10 +32,12 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
 import { usePanierStore } from "./panier";
+import { storeToRefs } from "pinia";
 
 const panierStore = usePanierStore();
+const { cocktails } = storeToRefs(panierStore);
 </script>
 
 <style scoped>

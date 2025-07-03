@@ -1,4 +1,4 @@
-@TOKEN= eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QGV4YW1wbGUuY29tIiwiaWF0IjoxNzUxNDQ3MjMyLCJleHAiOjE3NTE1MzM2MzJ9.Vvx2yN1xpOT1sbhZl4YcLa0PQtAfsy1u_cut_qPwfr-dIj5Ml7Uv6J7Mz6S-RsW7dgRzs9VKnI4uU3BvDUblbQ
+@TOKEN= eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJiYXJtYW5AZXhhbXBsZS5jb20iLCJyb2xlIjoiQkFSTUFLRVIiLCJpYXQiOjE3NTE1MzM1MzQsImV4cCI6MTc1MTYxOTkzNH0.7lp8H96lVFU2lDKjGnBiq_73_BMhlVz9nrsFjEV4DiusTYW1LG6WqJ91fu9hhuXoqLBl2ktRxIr2dsTOfk1lqQ
 
 
 ### Connexion (login)
@@ -12,9 +12,106 @@ Content-Type: application/json
 
 ###
 
+### Connexion Barman (login)
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+  "email": "barman@example.com",
+  "password": "barman"
+}
+
+###
+
 ### Récupérer la liste des cocktails (remplacez <TOKEN> par le vrai token reçu)
 GET http://localhost:8080/cocktails
 Authorization: Bearer {{TOKEN}}
 Accept: application/json
+
+### Ajouter un cocktail (remplacez <TOKEN> par le vrai token d'un BARMAKER)
+POST http://localhost:8080/cocktails
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+  "cocktail_name": "Mojito Test",
+  "description": "Un cocktail de test à la menthe",
+  "image_url": "https://images.unsplash.com/photo-mojito-test.jpg",
+  "category_id": 101
+}
+
+### Récupérer toutes les commandes (OrderCocktail)
+GET http://localhost:8080/ordercocktail
+Authorization: Bearer {{TOKEN}}
+Accept: application/json
+
+### Récupérer une commande par ID
+GET http://localhost:8080/ordercocktail/501
+Authorization: Bearer {{TOKEN}}
+Accept: application/json
+
+### Créer une commande (OrderCocktail)
+POST http://localhost:8080/ordercocktail
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+  "order_date": "2024-07-02",
+  "order_status": "EN_COURS",
+  "customer_id": "1",
+}
+
+### Modifier une commande (OrderCocktail)
+PUT http://localhost:8080/ordercocktail/501
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+  "order_date": "2024-07-03",
+  "order_status": "TERMINEE",
+  "customer_id": "1",
+}
+
+### Supprimer une commande (OrderCocktail)
+DELETE http://localhost:8080/ordercocktail/501
+Authorization: Bearer {{TOKEN}}
+
+### Récupérer toutes les lignes de commande (OrderLine)
+GET http://localhost:8080/orderline
+Authorization: Bearer {{TOKEN}}
+Accept: application/json
+
+### Récupérer une ligne de commande par ID
+GET http://localhost:8080/orderline/601
+Authorization: Bearer {{TOKEN}}
+Accept: application/json
+
+### Créer une ligne de commande (OrderLine)
+POST http://localhost:8080/orderline
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+  "quantity": "2",
+  "line_cocktail_status": "EN_COURS",
+  "price_size_id": "1",
+  "order_id": "1"
+}
+
+### Modifier une ligne de commande (OrderLine)
+PUT http://localhost:8080/orderline/601
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+  "quantity": "3",
+  "line_cocktail_status": "TERMINEE",
+  "price_size_id": "1",
+  "order_id": "1"
+}
+
+### Supprimer une ligne de commande (OrderLine)
+DELETE http://localhost:8080/orderline/1
+Authorization: Bearer {{TOKEN}}
 
 ### 

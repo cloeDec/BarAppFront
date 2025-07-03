@@ -18,44 +18,46 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { ref } from "vue";
 import axios from "axios";
-import { getRoleFromToken } from "../main";
+import { useRouter } from "vue-router";
 
-export default {
-  name: "Login",
-  data() {
-    return {
-      email: "",
-      password: "",
-      error: "",
-    };
-  },
-  methods: {
-    async handleLogin() {
-      this.error = "";
-      try {
-        const response = await axios.post("http://localhost:8080/login", {
-          email: this.email,
-          password: this.password,
-        });
-        localStorage.setItem("token", response.data.token);
-        // Redirige selon le rôle
-        const role = getRoleFromToken();
-        if (role === "CLIENT") {
-          this.$router.push("/cocktails").then(() => window.location.reload());
-        } else if (role === "BARMAKER") {
-          this.$router
-            .push("/ordercocktail")
-            .then(() => window.location.reload());
-        } else {
-          this.$router.push("/").then(() => window.location.reload());
-        }
-      } catch (err) {
-        this.error = "Email ou mot de passe incorrect.";
-      }
-    },
-  },
+function getRoleFromToken(): string | null {
+  const token = localStorage.getItem("token");
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    return payload.role || null;
+  } catch {
+    return null;
+  }
+}
+
+const email = ref("");
+const password = ref("");
+const error = ref("");
+const router = useRouter();
+
+const handleLogin = async () => {
+  error.value = "";
+  try {
+    const response = await axios.post("http://localhost:8080/login", {
+      email: email.value,
+      password: password.value,
+    });
+    localStorage.setItem("token", response.data.token);
+    const role = getRoleFromToken();
+    if (role === "CLIENT") {
+      router.push("/cocktails").then(() => window.location.reload());
+    } else if (role === "BARMAKER") {
+      router.push("/ordercocktail").then(() => window.location.reload());
+    } else {
+      router.push("/").then(() => window.location.reload());
+    }
+  } catch (err) {
+    error.value = "Email ou mot de passe incorrect.";
+  }
 };
 </script>
 
@@ -133,6 +135,16 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background: #e0b49e;
+}
+
+.error {
+  color: #fff;
+  background: #c0392b;
+  border-radius: 8px;
+  padding: 10px 16px;
+  margin-top: 12px;
+  text-align: center;
+  font-weight: 600;
 }
 
 @media (max-width: 600px) {

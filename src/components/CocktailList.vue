@@ -4,7 +4,7 @@
     <div class="card-list">
       <div
         class="cocktail-card"
-        v-for="(cocktail, idx) in cocktail"
+        v-for="(cocktail, idx) in cocktailList"
         :key="cocktail.cocktail_id"
         :class="{ 'fly-to-cart': animatingIndexes.includes(idx) }"
       >
@@ -28,53 +28,50 @@
   </div>
 </template>
 
-<script>
+<script lang="ts" setup>
+import { ref, onMounted } from "vue";
 import axios from "axios";
 
-export default {
-  data() {
-    return {
-      cocktail: [],
-      error: null,
-      selectedCocktail: null,
-      hoveredCocktail: null,
-      animatingIndexes: [],
-    };
-  },
+interface Cocktail {
+  cocktail_id: number;
+  cocktail_name: string;
+  description: string;
+  image_url: string;
+}
 
-  methods: {
-    selectCocktail(cocktail) {
-      this.selectedCocktail = cocktail;
-    },
-    async fetchCocktail() {
-      try {
-        const token = localStorage.getItem("token");
-        const response = await axios.get("http://localhost:8080/cocktails", {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        });
-        this.cocktail = response.data;
-      } catch (error) {
-        this.error = "Erreur lors du chargement des cocktail.";
-        console.error(error);
+const cocktailList = ref<Cocktail[]>([]);
+const error = ref<string | null>(null);
+const animatingIndexes = ref<number[]>([]);
+
+const fetchCocktail = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const response = await axios.get<Cocktail[]>(
+      "http://localhost:8080/cocktails",
+      {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
       }
-    },
-    addToCart(cocktail, idx) {
-      let panier = JSON.parse(localStorage.getItem("panier") || "[]");
-      panier.push(cocktail);
-      localStorage.setItem("panier", JSON.stringify(panier));
-      this.animatingIndexes.push(idx);
-      setTimeout(() => {
-        this.animatingIndexes = this.animatingIndexes.filter((i) => i !== idx);
-      }, 700);
-    },
-  },
-
-  mounted() {
-    this.fetchCocktail();
-  },
+    );
+    cocktailList.value = response.data;
+  } catch (err) {
+    error.value = "Erreur lors du chargement des cocktails.";
+    console.error(err);
+  }
 };
+
+const addToCart = (cocktail: Cocktail, idx: number) => {
+  let panier: Cocktail[] = JSON.parse(localStorage.getItem("panier") || "[]");
+  panier.push(cocktail);
+  localStorage.setItem("panier", JSON.stringify(panier));
+  animatingIndexes.value.push(idx);
+  setTimeout(() => {
+    animatingIndexes.value = animatingIndexes.value.filter((i) => i !== idx);
+  }, 700);
+};
+
+onMounted(fetchCocktail);
 </script>
 
 <style scoped>

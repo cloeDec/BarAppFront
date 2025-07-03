@@ -6,6 +6,8 @@ import Connection from "@/Page/Connection.vue";
 import Login from "@/components/Login.vue";
 import OrderCocktail from "@/components/OrderCocktail.vue";
 import Panier from "@/components/Panier.vue";
+import CarteBarmaker from "@/components/CarteBarmaker.vue";
+import OrderDetails from "../components/OrderDetails.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -31,6 +33,17 @@ const routes: Array<RouteRecordRaw> = [
     path: "/panier",
     name: "Panier",
     component: Panier,
+  },
+  {
+    path: "/carte",
+    name: "Carte",
+    component: CarteBarmaker,
+  },
+  {
+    path: "/ordercocktail/:id",
+    name: "OrderDetails",
+    component: OrderDetails,
+    props: true,
   },
 ];
 

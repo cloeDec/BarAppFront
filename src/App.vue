@@ -35,8 +35,7 @@ export default defineComponent({
       return !!localStorage.getItem("token");
     },
     isLoginPage(): boolean {
-      // Adapte selon le nom de ta route de connexion
-      return this.route.path === "/" || this.route.path === "/login";
+      return this.route.path === "/";
     },
     userRole() {
       return getRoleFromToken();
