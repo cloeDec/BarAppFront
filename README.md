@@ -1,19 +1,48 @@
-# barapp-frontend
+# Barapp - Frontend (Vue.js)
 
-## Project setup
-```
-npm install
-```
+## Prérequis
 
-### Compiles and hot-reloads for development
-```
+- Java 17 ou supérieur
+- Maven 3.6+ (ou utiliser le wrapper fourni : `mvnw`/`mvnw.cmd`)
+- PostgreSQL
+
+## Installation
+
+1. **Cloner le projet**
+   ```sh
+   git clone <https://github.com/cloeDec/BarAppFront.git>
+   cd barapp-frontend
+   ```
+2. **Installer les dépendances**
+   ```sh
+   npm install
+   ```
+
+## Démarrage de l'application
+
+```sh
 npm run serve
 ```
 
-### Compiles and minifies for production
+L'application sera accessible par défaut sur :
+
 ```
-npm run build
+http://localhost:8081
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Configuration
+
+- Par défaut, le frontend attend le backend sur `http://localhost:8080`.
+
+## Structure du projet
+
+- `src/components` : composants Vue.js (ex : CocktailList, Login, Panier...)
+- `src/router` : configuration du routage
+
+
+## Conseils
+
+- Démarrez le backend avant le frontend pour que les appels API fonctionnent.
+- Vérifiez que le port du backend (`8080`) correspond à celui attendu dans le frontend.
+
+---
